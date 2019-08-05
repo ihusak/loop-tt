@@ -9,9 +9,10 @@ import {Routes, RouterModule} from '@angular/router';
 import { ChartManipulateComponent } from './chart/chart-manipulate/chart-manipulate.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatSelectModule, MatSortModule, MatTableModule} from '@angular/material';
+import { HomeComponent } from './home/home.component';
 
 const appRoutes: Routes = [
-  {path: '', component: AppComponent},
+  {path: '', component: HomeComponent},
   {path: 'chart', component: ChartComponent}
 ]
 
@@ -20,7 +21,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     ChartComponent,
-    ChartManipulateComponent
+    ChartManipulateComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

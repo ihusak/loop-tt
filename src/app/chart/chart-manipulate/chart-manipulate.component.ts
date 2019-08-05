@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, Input, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, AfterViewInit} from '@angular/core';
 import {ChartService} from '../chart.service';
 import {ChartComponent} from '../chart.component';
 import * as moment from 'moment';
@@ -31,12 +31,12 @@ const options = {
 /**
  * Manipulation with forms and generate table
  */
-export class ChartManipulateComponent implements OnInit, AfterViewInit, OnChanges {
+export class ChartManipulateComponent implements OnInit, AfterViewInit {
 
   public allCoinsData: any; // all coins
   public displayedColumns: string[] = ['name', 'date', 'value'];
-  public selectedAdd: number;
-  public selectedRemove: number;
+  public selectedAdd: any;
+  public selectedRemove: any;
 
   @Input() coins;
   @Input() data;
