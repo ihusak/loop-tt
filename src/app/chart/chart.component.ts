@@ -19,8 +19,8 @@ const DEFAULT_HEIGHT: number = 500;
  */
 export class ChartComponent implements OnInit {
 
-  coins;
-  data;
+  private coins;
+  private data;
   @ViewChild('chartElement', { static: false }) chartElement: ElementRef;
 
   private margin: any = { top: 20, bottom: 20, left: 50, right: 50};
@@ -43,7 +43,7 @@ export class ChartComponent implements OnInit {
 
   /**
    * Build graph callback
-   * @param data [{}]
+   * @param coins [{}]
    * @returns [{}]
    */
   public buildGraph(coins): ChartInterfaceCoin[] {
@@ -60,7 +60,7 @@ export class ChartComponent implements OnInit {
       }))
       .range([ 0, this.height ]);
     const xDomain = d3.scaleTime()
-      .domain(<[number, number]>d3.extent(this.data.concatData, (d) => {
+      .domain(<[number, number]> d3.extent(this.data.concatData, (d) => {
         return d['date'];
       }))
       .range([ 0, this.width ]);
@@ -106,7 +106,7 @@ export class ChartComponent implements OnInit {
 
   /**
    * Build legend of graph
-   * @param {{}}
+   * @params {}
    */
   private createLegend(self) {
     const legend = self.svg.selectAll('.legend')
@@ -167,16 +167,18 @@ export class ChartComponent implements OnInit {
    * Prepare date for using
    * @param data [{}]
    * @param dates []
-   * @returns {{changedData: [{}]; concatData: [{}]}}
+   * @returns ChartInterfaceData
    */
    private prepareData(data, dates): ChartInterfaceData {
     let modifyData;
     let fullData = [];
     for (let i = 0; i < data.length; i += 1 ) {
       modifyData = data[i].history.map((item, index) => {
+        const ceil = Math.ceil(item * 10000) / 10000;
+        const floor = Math.floor(item.value);
         return {
           date: new Date(dates[index]).getTime(),
-          value: item.length ? Math.floor(item) <= 0 ? Math.ceil(item*10000)/10000 : Math.floor(item) : Math.floor(item.value) <= 0 ? Math.ceil(item.value*10000)/10000 : Math.floor(item.value),
+          value: item.length ? Math.floor(item) <= 0 ? ceil : Math.floor(item) : floor <= 0 ? Math.ceil(item.value * 10000) / 10000 : floor,
           name: data[i].name
         }
       });
@@ -191,9 +193,9 @@ export class ChartComponent implements OnInit {
    * @param count number
    * @returns []
    */
-  private generateTimeStamp(count) {
-    let result = [];
-    for(let i = count; i >= 0; i -= 1) {
+  private generateTimeStamp(count): string[] {
+    const result = [];
+    for (let i = count; i >= 0; i -= 1) {
       result.push(moment().subtract(i, 'd').format('YYYY-MM-DD'));
     }
     return result;
@@ -201,8 +203,8 @@ export class ChartComponent implements OnInit {
 
   /**
    * Hover event on chart graph
-   * @param data
-   * @param domains
+   * @params data
+   * @params domains
    */
   private hoverEvent(data, domains) {
     const self = data;
@@ -224,7 +226,7 @@ export class ChartComponent implements OnInit {
         .attr('y1', 0)
         .attr('y2', self.height);
       tooltip
-        .html('<div class="date">'+ moment(day).format('YYYY-MM-DD') + '</div>')
+        .html('<div class="date">' + moment(day).format('YYYY-MM-DD') + '</div>')
         .style('display', 'block')
         .style('left', (d3.mouse(this)[0] + 60) + 'px')
         .style('background-color', '#fff')

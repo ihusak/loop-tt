@@ -5,7 +5,7 @@ interface ChartInterfaceCoin {
 }
 
 interface ChartInterfaceData {
-  concatData: ChartInterfaceCoin;
+  concatData: ChartInterfaceCoin[];
   changedData: any;
 }
 

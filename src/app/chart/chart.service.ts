@@ -8,14 +8,14 @@ class ChartService {
     constructor(private http: HttpClient) {
 
     }
-  public getCoins(ids: string, period: string) {
-      return this.http.get<any>(`https://api.coinranking.com/v1/public/coins?ids=${ids}&period=${period}`);
+  public getCoins(ids: string, period: string): Observable<any> {
+      return this.http.get(`https://api.coinranking.com/v1/public/coins?ids=${ids}&period=${period}`);
   }
-  public getCoinsFull() {
-    return this.http.get<any>(`https://api.coinranking.com/v1/public/coins`);
+  public getCoinsFull(): Observable<any> {
+    return this.http.get(`https://api.coinranking.com/v1/public/coins`);
   }
-  public getCoinsById(id) {
-    return this.http.get<any>(`https://api.coinranking.com/v1/public/coin/${id}`);
+  public getCoinsById(id): Observable<any> {
+    return this.http.get(`https://api.coinranking.com/v1/public/coin/${id}`);
   }
 }
 

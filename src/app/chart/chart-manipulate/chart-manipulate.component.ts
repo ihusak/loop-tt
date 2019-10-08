@@ -68,7 +68,7 @@ export class ChartManipulateComponent implements OnInit, AfterViewInit {
    * Add coin
    * @param id
    */
-  addCoin(id: number){
+  addCoin(id: number) {
     this.chartService.getCoinsById(id).subscribe((res) => {
       this.coins.push(res.data.coin);
       this.dataSource.data = this.chartComponent.buildGraph(this.coins);
@@ -80,7 +80,7 @@ export class ChartManipulateComponent implements OnInit, AfterViewInit {
    * Remove coin
    * @param id
    */
-  removeCoin(id: number){
+  removeCoin(id: number) {
     this.coins = this.coins.filter((item)=>item.id !== id);
     this.dataSource.data = this.chartComponent.buildGraph(this.coins);
     this.selectedRemove = false;
@@ -89,9 +89,9 @@ export class ChartManipulateComponent implements OnInit, AfterViewInit {
   /**
    * Disable button if select showed coin
    * @param id
-   * @returns {any}
+   * @returns {boolean}
    */
-  checkShowedCoin(id: number){
+  checkShowedCoin(id: number): boolean {
     let flag;
     for(var i = 0; i < this.coins.length; i+=1){
       if(this.coins[i].id === id){
@@ -105,13 +105,14 @@ export class ChartManipulateComponent implements OnInit, AfterViewInit {
    * Exepor table to csv file
    * @param data
    */
-  exportCsv(data){
-    data = data.map((item)=>{ return {
+  exportCsv(data) {
+    data = data.map((item) => {
+      return {
       date: moment(item.date).format('D/MM/YY'),
       value: item.value,
       name: item.name
-    }
-    })
+    };
+    });
     const csvExporter = new ExportToCsv(options);
     csvExporter.generateCsv(data);
   }
